@@ -12,7 +12,6 @@ public class Renderer {
         int[] preview = grid.getSpawnPreviewCounts();
         boolean showPreview = preview != null;
 
-        //Zombie Col
         System.out.print("   ");
         for (int c = 0; c < cols; c++) System.out.print(c % 10);
         if (showPreview) System.out.print(" S");
@@ -21,7 +20,7 @@ public class Renderer {
         char[][] m = new char[rows][cols];
         for (int r = 0; r < rows; r++) for (int c = 0; c < cols; c++) m[r][c] = '.';
 
-        for (Plant p : grid.plants()) {
+        for (Plant p : grid.getPlantsValue()) {
             char ch = 'A';
             if (p instanceof Sunflower) ch = 'S';
             else if (p instanceof PeaShooter) ch = 'P';
@@ -30,7 +29,7 @@ public class Renderer {
         }
 
         int[][] cnt = new int[rows][cols];
-        for (Zombie z : grid.zombies()) {
+        for (Zombie z : grid.getZombies()) {
             if (z.isDead()) continue;
             if (z.getCol() >= 0 && z.getCol() < cols) cnt[z.getRow()][z.getCol()]++;
         }

@@ -24,11 +24,7 @@ public class Grid {
         this.cols = cols;
     }
 
-    public List<Zombie> zombies() {
-        return zombies;
-    }
-
-    public Collection<Plant> plants() {
+    public Collection<Plant> getPlantsValue() {
         return plants.values();
     }
 

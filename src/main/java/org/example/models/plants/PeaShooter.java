@@ -21,7 +21,7 @@ public class PeaShooter extends Plant {
 
         Zombie nearestZombie = null;
         int nearRestCol = 15;
-        for (Zombie z : grid.zombies()) {
+        for (Zombie z : grid.getZombies()) {
             if (z.isDead() || z.getRow() != row) continue;
             int dc = z.getCol() - col;
             if (dc >= 0 && dc <= range && z.getCol() < nearRestCol) {

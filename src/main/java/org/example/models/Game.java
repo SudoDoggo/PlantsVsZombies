@@ -66,13 +66,13 @@ public class Game {
     //<editor-fold desc="GameEngine">
     public void tick() {
         if (started) {
-            for (var p : grid.plants()) p.act();
+            for (var p : grid.getPlantsValue()) p.act();
             int reached = grid.advanceAllZombies();
             if (reached > 0) lives -= reached;
             int bounty = grid.collectBountiesAndCleanup();
             if (bounty > 0) player.addMoney(bounty);
             boolean allSpawned = spawnedFromPlan >= spawnPlan.size();
-            boolean noneAlive  = grid.zombies().stream().noneMatch(z -> !z.isDead());
+            boolean noneAlive  = grid.getZombies().stream().noneMatch(z -> !z.isDead());
             if (allSpawned && noneAlive) {
                 waveNumber++;
                 prepareWave(waveNumber);
@@ -86,11 +86,11 @@ public class Game {
     public void runGameWave(PrintStream out) {
         started = true;
         betweenWaves = false;
-        long t0 = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         long nextTick = System.currentTimeMillis()+ gameTicks;
         while (!isGameOver()) {
             long now = System.currentTimeMillis();
-            long elapsed = now - t0;
+            long elapsed = now - startTime;
             while (spawnedFromPlan < spawnPlan.size()
                     && spawnPlan.get(spawnedFromPlan).delayMs <= elapsed) {
                 var ev = spawnPlan.get(spawnedFromPlan++);
@@ -124,8 +124,8 @@ public class Game {
             String cmd = p[0].toLowerCase();
             try {
                 switch (cmd) {
-                    case "place" -> {
-                        if (p.length < 4) { out.println("place S|P|O (row) (col"); break; }
+                    case "plant" -> {
+                        if (p.length < 4) { out.println("plant S|P|O (row) (col"); break; }
                         String type = p[1].toLowerCase();
                         int r = Integer.parseInt(p[2]);
                         int c = Integer.parseInt(p[3]);
@@ -135,7 +135,7 @@ public class Game {
                             case "o", "potato" -> getPlayer().placePotato(r,c);
                             default -> { out.println("Unknown plant. Use S, P, or O."); yield false; }
                         };
-                        out.println(ok ? "Placed." : "Failed to place.");
+                        out.println(ok ? "Planted." : "Failed to place.");
                     }
 
                     case "remove" -> {
