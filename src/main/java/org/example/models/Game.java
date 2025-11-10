@@ -115,7 +115,11 @@ public class Game {
         Scanner in = new Scanner(inStream);
         Renderer.print(getGrid(), getPlayer().getMoney(), getLives());
         while (true) {
-            if (isGameOver()) { out.println("=======GAME OVER======="); break; }
+            if (isGameOver()) {
+                out.println("=======GAME OVER=======");
+                out.println("You defeated " + waveNumber + " waves.");
+                break;
+            }
             out.print("> "); out.flush();
             if (!in.hasNextLine()) break;
             String line = in.nextLine().trim();

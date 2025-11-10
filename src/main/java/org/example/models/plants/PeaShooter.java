@@ -8,6 +8,7 @@ public class PeaShooter extends Plant {
     private int damage = 6;
     private int cooldown = 0;
     private int fireDelay = 2;
+    private boolean slowBullet = false;
 
     public PeaShooter() {
         super("PeaShooter", 20, 40);
@@ -32,6 +33,13 @@ public class PeaShooter extends Plant {
         }
         if (nearestZombie != null) {
             nearestZombie.takeDamage(damage);
+            if(slowBullet) {
+                if(nearestZombie.getSpeed()==0)
+                    nearestZombie.setSpeed(1);
+                else
+                    nearestZombie.setSpeed(0);
+            }
+
             cooldown = fireDelay;
         }
     }
@@ -39,18 +47,19 @@ public class PeaShooter extends Plant {
     @Override
     public boolean isUpgraded(Player player){
         if(tier == 1&&player.getMoney()>=80){
-            damage *=2;
+            damage +=6;
             tier++;
             player.setMoney(player.getMoney() - 80);
             return true;
         }else if(tier == 2&&player.getMoney()>=200){
-            damage *=2;
+            damage +=6;
             tier++;
             player.setMoney(player.getMoney() - 200);
             return true;
         }else if(tier == 3&&player.getMoney()>=400){
             //freeze
             tier++;
+            slowBullet=true;
             player.setMoney(player.getMoney() - 400);
             return true;
         } else{
