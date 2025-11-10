@@ -120,6 +120,12 @@ public class Game {
                 out.println("You defeated " + waveNumber + " waves.");
                 break;
             }
+            if(waveNumber==10)
+            {
+                out.println("=======GAME WON=======");
+                out.println("You defeated " + waveNumber + " waves.");
+                break;
+            }
             out.print("> "); out.flush();
             if (!in.hasNextLine()) break;
             String line = in.nextLine().trim();
