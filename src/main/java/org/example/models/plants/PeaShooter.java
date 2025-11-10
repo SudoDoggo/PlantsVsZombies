@@ -1,5 +1,6 @@
 package org.example.models.plants;
 
+import org.example.models.Player;
 import org.example.models.zombies.Zombie;
 
 public class PeaShooter extends Plant {
@@ -9,7 +10,7 @@ public class PeaShooter extends Plant {
     private int fireDelay = 2;
 
     public PeaShooter() {
-        super("PeaShooter", 20, 100);
+        super("PeaShooter", 20, 40);
     }
 
     @Override
@@ -32,6 +33,28 @@ public class PeaShooter extends Plant {
         if (nearestZombie != null) {
             nearestZombie.takeDamage(damage);
             cooldown = fireDelay;
+        }
+    }
+
+    @Override
+    public boolean isUpgraded(Player player){
+        if(tier == 1&&player.getMoney()>=80){
+            damage *=2;
+            tier++;
+            player.setMoney(player.getMoney() - 80);
+            return true;
+        }else if(tier == 2&&player.getMoney()>=200){
+            damage *=2;
+            tier++;
+            player.setMoney(player.getMoney() - 200);
+            return true;
+        }else if(tier == 3&&player.getMoney()>=400){
+            //freeze
+            tier++;
+            player.setMoney(player.getMoney() - 400);
+            return true;
+        } else{
+            return false;
         }
     }
 }

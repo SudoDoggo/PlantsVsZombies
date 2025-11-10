@@ -40,6 +40,13 @@ public class Grid {
 
     public boolean removePlant(int r,int c){return plants.remove(placement(r, c)) != null;}
 
+    public boolean upgradePlant(int r,int c, Player player) {
+        boolean canUpgrade = false;
+        canUpgrade = plants.get(placement(r, c)).isUpgraded(player);
+        return canUpgrade;
+    }
+
+
     public void spawnZombie(int row, int startCol, int hp, int speed, int bounty){
         zombies.add(new Zombie(row, startCol, hp, speed, bounty));
     }

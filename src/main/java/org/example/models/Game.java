@@ -100,7 +100,7 @@ public class Game {
             if (now >= nextTick) {
                 tick();
                 nextTick += gameTicks;
-                Renderer.print(getGrid(), getPlayer().money(), getLives());
+                Renderer.print(getGrid(), getPlayer().getMoney(), getLives());
             }
             if (betweenWaves) {
                 out.println("Wave finished. Next wave prepared — place plants and type 'run' to start.");
@@ -113,7 +113,7 @@ public class Game {
 
     public void startGame(InputStream inStream, PrintStream out) {
         Scanner in = new Scanner(inStream);
-        Renderer.print(getGrid(), getPlayer().money(), getLives());
+        Renderer.print(getGrid(), getPlayer().getMoney(), getLives());
         while (true) {
             if (isGameOver()) { out.println("=======GAME OVER======="); break; }
             out.print("> "); out.flush();
@@ -144,6 +144,12 @@ public class Game {
                         out.println(getPlayer().removePlant(r,c) ? "Removed." : "Failed to remove.");
                     }
 
+                    case "upgrade" -> {
+                        if (p.length < 3) { out.println("Usage: upgrade (row) (col)"); break; }
+                        int r = Integer.parseInt(p[1]), c = Integer.parseInt(p[2]);
+                        out.println(getPlayer().upgradePlant(r,c,player) ? "Upgraded." : "Failed to upgrade.");
+                    }
+
                     case "run" -> {
                         runGameWave(out);
                         continue;
@@ -156,7 +162,7 @@ public class Game {
             } catch (Exception e) {
                 out.println("Error: " + e.getMessage());
             }
-            Renderer.print(getGrid(), getPlayer().money(), getLives());
+            Renderer.print(getGrid(), getPlayer().getMoney(), getLives());
         }
     }
 }

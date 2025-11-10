@@ -1,7 +1,11 @@
 package org.example.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.models.plants.*;
 
+@Getter
+@Setter
 public class Player {
     private final Grid grid;
     private int money;
@@ -11,7 +15,7 @@ public class Player {
         this.money = startingMoney;
     }
 
-    public int money() { return money; }
+    public int getMoney() { return money; }
     public void addMoney(int amount) { money += Math.max(0, amount); }
     public boolean canAfford(int cost) { return money >= cost; }
 
@@ -22,6 +26,7 @@ public class Player {
         money -= plant.getCost();
         return true;
     }
+    public boolean upgradePlant(int r,int c, Player player) {return grid.upgradePlant(r,c,player);}
 
     public boolean placeSunflower(int r,int c){ return place(new Sunflower(), r, c); }
     public boolean placePeaShooter(int r,int c){ return place(new PeaShooter(), r, c); }

@@ -16,12 +16,14 @@ public abstract class Plant {
     protected int hp;
     protected Grid grid;
     protected Player player;
+    protected int tier;
 
     protected Plant(String name, int cost, int maxHp) {
         this.name = name;
         this.cost = cost;
         this.maxHp = maxHp;
         this.hp = this.maxHp;
+        this.tier = 1;
     }
     public void setPosition(int r,int c){
         this.row = r;
@@ -41,4 +43,6 @@ public abstract class Plant {
         this.player = player;
     }
     public abstract void act();
+
+    public abstract boolean isUpgraded(Player player);
 }
